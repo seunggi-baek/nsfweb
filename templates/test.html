@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Screen</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  .main-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+  }
+  .button {
+    padding: 20px 40px;
+    margin: 10px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .user-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  .admin-button {
+    background-color: #008CBA;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="main-screen">
+  <button class="button user-button">사용자</button>
+  <button class="button admin-button">관리자</button>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>목표 수량 입력</title>
+<style>
+ body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  background-color: #f7f7f7;
+ }
+ .screen-boundary {
+  width: 800px;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid red;
+  box-sizing: border-box;
+  margin: auto;
+  position: relative;
+ }
+ .input-container {
+  display: grid; /* 그리드 레이아웃 사용 */
+  grid-template-columns: auto auto; /* 2열로 나눔 */
+  grid-gap: 10px; /* 그리드 간격 설정 */
+  margin-bottom: 20px;
+ }
+ .button {
+  width: 300px;
+  height: 100px;
+  padding: 20px 40px;
+  margin: 10px;
+  font-size: 1.5em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+ }
+ .num-button {
+  padding: 20px;
+  margin: 5px;
+  font-size: 1.5em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: calc(25% - 30px); /* 화면 양쪽에 30px 여백 제거 */
+ }
+ .user-button {
+  background-color: #4CAF50;
+  color: white;
+  width: 100%; /* 목표수량 버튼 넓이 조정 */
+ }
+ .admin-button {
+  background-color: #008CBA;
+  color: white;
+ }
+ .numpad-container {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  width: 400px; /* 넓이 조정 */
+ }
+ .row {
+  display: flex;
+  justify-content: space-around;
+ }
+ .column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
+ #numDisplay {
+  padding: 10px; /* 수정된 부분: 높이와 버튼의 높이 동일하게 조정 */
+  font-size: 1.5em;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  margin-bottom: 10px;
+  width: 300px; /* 넓이 조정 */
+  align-self: center; /* 가운데 정렬 */
+  height: 60px; /* 수정된 부분: 높이 조정 */
+ }
+</style>
+</head>
+<body>
+
+<div class="screen-boundary">
+
+ <div class="header-container">
+  <button class="button user-button" onclick="openNumPad('R')">목표 수량</button>
+  <button class="button user-button" onclick="openNumPad('G')">시작</button>
+  <button class="button user-button" onclick="openNumPad('B')">홈</button>
+  <button class="button user-button" onclick="openNumPad('Y')">목표 수량</button>
+ </div>
+
+ <div class="input-container">
+  <button class="button user-button" onclick="openNumPad('R')">목표 수량</button>
+  <button class="button user-button" onclick="openNumPad('G')">시작</button>
+  <button class="button user-button" onclick="openNumPad('B')">홈</button>
+  <button class="button user-button" onclick="openNumPad('Y')">목표 수량</button>
+ </div>
+
+ <div class="numpad-container" id="numpad">
+  <div class="column"> <!-- 수정된 부분: numDisplay 위치 조정 -->
+   <div id="numDisplay"> </div> <!-- 수정된 부분: numDisplay 위치 조정 -->
+   <div class="row">
+    <button class="num-button" onclick="numberClicked('7')">7</button>
+    <button class="num-button" onclick="numberClicked('8')">8</button>
+    <button class="num-button" onclick="numberClicked('9')">9</button>
+   </div>
+   <div class="row">
+    <button class="num-button" onclick="numberClicked('4')">4</button>
+    <button class="num-button" onclick="numberClicked('5')">5</button>
+    <button class="num-button" onclick="numberClicked('6')">6</button>
+   </div>
+   <div class="row">
+    <button class="num-button" onclick="numberClicked('1')">1</button>
+    <button class="num-button" onclick="numberClicked('2')">2</button>
+    <button class="num-button" onclick="numberClicked('3')">3</button>
+   </div>
+   <div class="row">
+    <button class="num-button" onclick="numberClicked('0')">0</button>
+    <button class="num-button" onclick="submitNumPad()">입력</button>
+    <button class="num-button" onclick="closeNumPad()">취소</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<script>
+ var selectedButton = null;
+ var numValue = ''; // 입력된 숫자를 저장할 변수
+
+ function openNumPad(color) {
+  selectedButton = color;
+  document.getElementById('numpad').style.display = 'flex';
+  numValue = ''; // numValue 초기화
+  updateNumDisplay(); // 숫자 표시 업데이트
+ }
+
+ function numberClicked(number) {
+  numValue += number; // 숫자 누적
+  updateNumDisplay(); // 숫자 표시 업데이트
+ }
+
+ function submitNumPad() {
+  if (selectedButton) {
+   // 선택된 버튼에 입력된 숫자 표시
+   var buttonText = numValue || '목표 수량';
+   document.getElementById(selectedButton).textContent = buttonText;
+  }
+  document.getElementById('numpad').style.display = 'none';
+ }
+
+ function closeNumPad() {
+  numValue = ''; // 취소 시 입력된 숫자 초기화
+  updateNumDisplay(); // 숫자 표시 업데이트
+  document.getElementById('numpad').style.display = 'none';
+ }
+
+ function updateNumDisplay() {
+  document.getElementById('numDisplay').textContent = numValue;
+ }
+</script>
+
+</body>
+</html>

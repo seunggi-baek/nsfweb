@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serial Data Display</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Serial Data Display</h1>
+    <div id="serial-data"></div>
+
+    <script>
+        $(document).ready(function() {
+            function getSerialData() {
+                console.log('call getSerialData');
+                $.ajax({
+                    url: '/serial_data',
+                    success: function(response) {
+                        $('#serial-data').text(response.data);
+                    }
+                });
+            }
+
+            setInterval(getSerialData, 1000);  // 1초마다 시리얼 데이터 업데이트
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>목표 수량 입력</title>
+<style>
+  body, html {
+    width: 100%; /* 전체 화면 너비로 설정 */
+    height: 100%; /* 전체 화면 높이로 설정 */
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .input-item {
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 60%;
+  }
+
+  .numpad-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+
+  .numpad-button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 24px;
+    border-radius: 5px;
+    background-color: #e7e7e7;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="input-container">
+  <button class="input-item" data-default-text="R 목표 수량" onclick="openNumPad(this)">R 목표 수량</button>
+  <button class="input-item" data-default-text="G 목표 수량" onclick="openNumPad(this)">G 목표 수량</button>
+  <button class="input-item" data-default-text="B 목표 수량" onclick="openNumPad(this)">B 목표 수량</button>
+  <button class="input-item" data-default-text="Y 목표 수량" onclick="openNumPad(this)">Y 목표 수량</button>
+</div>
+
+<div class="numpad-container" id="numpad" style="display: none;">
+  <div id="numDisplay" style="padding: 10px; font-size: 24px; border: 2px solid #ccc; border-radius: 10px; background-color: white; margin-bottom: 10px; width: 60%; text-align: center;"></div>
+  <button class="numpad-button" onclick="numberClicked('1')">1</button>
+  <button class="numpad-button" onclick="numberClicked('2')">2</button>
+  <button class="numpad-button" onclick="numberClicked('3')">3</button>
+  <button class="numpad-button" onclick="numberClicked('4')">4</button>
+  <button class="numpad-button" onclick="numberClicked('5')">5</button>
+  <button class="numpad-button" onclick="numberClicked('6')">6</button>
+  <button class="numpad-button" onclick="numberClicked('7')">7</button>
+  <button class="numpad-button" onclick="numberClicked('8')">8</button>
+  <button class="numpad-button" onclick="numberClicked('9')">9</button>
+  <button class="numpad-button" onclick="numberClicked('0')">0</button>
+  <button class="numpad-button" onclick="submitNumPad()">입력</button>
+  <button class="numpad-button" onclick="closeNumPad()">취소</button>
+</div>
+
+<script>
+  var selectedButton = null;
+  var numValue = ''; // 입력된 숫자를 저장할 변수
+
+  function openNumPad(button) {
+    selectedButton = button;
+    document.getElementById('numpad').style.display = 'flex';
+    numValue = ''; // numValue 초기화
+    updateNumDisplay(); // 숫자 표시 업데이트
+  }
+
+  function numberClicked(number) {
+    numValue += number; // 숫자 누적
+    updateNumDisplay(); // 숫자 표시 업데이트
+  }
+
+  function submitNumPad() {
+    if (selectedButton) {
+      selectedButton.textContent = numValue || selectedButton.getAttribute('data-default-text');
+    }
+    document.getElementById('numpad').style.display = 'none';
+  }
+
+  function closeNumPad() {
+    numValue = ''; // 취소 시 입력된 숫자 초기화
+    updateNumDisplay(); // 숫자 표시 업데이트
+    document.getElementById('numpad').style.display = 'none';
+  }
+
+  function updateNumDisplay() {
+    document.getElementById('numDisplay').textContent = numValue;
+  }
+</script>
+
+</body>
+</html>
